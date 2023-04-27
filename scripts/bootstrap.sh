@@ -14,6 +14,7 @@ clusterctl init --infrastructure docker
 
 kubectl config use-context kind-capi-management-cluster-kind
 
-kubectl apply -f ./capi-quickstart.yaml
+kubectl apply -f clusters/cloudinit
+kubectl apply -f clusters/kubeadm-config-template
+kubectl apply -f clusters/kubelet-extra-args
 
-kind get kubeconfig --name capi-quickstart > capi-quickstart.kubeconfig

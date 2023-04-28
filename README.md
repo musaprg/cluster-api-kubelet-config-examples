@@ -10,7 +10,6 @@ Propagating cluster-level configuration to each kubelet
 
 ```
 $ docker exec -it cloudinit-6zh27-tgx7j cat /etc/kubernetes/kubelet/config.yaml
-docker exec -it cloudinit-6zh27-tgx7j cat /etc/kubernetes/kubelet/config.yaml
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
 evictionHard:

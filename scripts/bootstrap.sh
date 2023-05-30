@@ -14,6 +14,9 @@ clusterctl init --infrastructure docker
 
 kubectl config use-context kind-capi-management-cluster-kind
 
+echo "sleep 10 seconds..."
+sleep 10
+
 kubectl apply -f clusters/cloudinit
 kubectl apply -f clusters/kubeadm-config-template
 kubectl apply -f clusters/kubelet-extra-args

@@ -2,7 +2,35 @@
 
 <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/kubelet-integration/#kubelet-configuration-patterns>
 
-## Write a Kubelet conf using CloudInit files
+## Let's try it out
+
+The following script will create a management cluster by `kind`, and create sample workload clusters under `clusters/`.
+
+```
+bash scripts/bootstrap.sh
+```
+
+To obtain kubeconfig for those clusters, follow the steps based on your environments.
+
+### Docker Desktop
+
+You need to use `kind` to obtain kubeconfig.
+
+```
+kind get kubeconfig --name ${CLUSTER_NAME?} > ${CLUSTER_NAME?}.kubeconfig
+```
+
+### Docker Engine (only Linux)
+
+You can use `clusterctl` to obtain kubeconfig.
+
+```
+clusterctl get kubeconfig ${CLUSTER_NAME?} > ${CLUSTER_NAME?}.kubeconfig
+```
+
+## Sample cluster definitions
+
+### Write a Kubelet conf using CloudInit files
 
 Propagating cluster-level configuration to each kubelet
 
@@ -65,7 +93,7 @@ $ docker exec -it cloudinit-6zh27-tgx7j cat /var/lib/kubelet/kubeadm-flags.env
 KUBELET_KUBEADM_ARGS="--config=/etc/kubernetes/kubelet/config.yaml --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock --pod-infra-container-image=registry.k8s.io/pause:3.9"
 ```
 
-## Add kubeletExtraArgs in the KubeadmConfigTemplate
+### Add kubeletExtraArgs in the KubeadmConfigTemplate
 
 Instance-level configuration
 
@@ -76,7 +104,7 @@ $ docker exec -it kubelet-extra-args-8xw46-8zws8 cat /var/lib/kubelet/kubeadm-fl
 KUBELET_KUBEADM_ARGS="--container-runtime-endpoint=unix:///var/run/containerd/containerd.sock --eviction-hard=nodefs.available<0%,nodefs.inodesFree<0%,imagefs.available<0% --pod-infra-container-image=registry.k8s.io/pause:3.9"
 ```
 
-## Use kubeletconfiguration patch target defined in the KubeadmConfigTemplate
+### Use kubeletconfiguration patch target defined in the KubeadmConfigTemplate
 
 Instance-level configuration
 

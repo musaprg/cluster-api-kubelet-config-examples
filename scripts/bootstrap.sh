@@ -20,3 +20,4 @@ kubectl apply -f clusters/cloudinit
 kubectl apply -f clusters/kubeadm-config-template
 kubectl apply -f clusters/kubelet-extra-args
 
+kubectl wait clusters --all -A --for condition=Ready --timeout 30s

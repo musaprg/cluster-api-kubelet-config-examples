@@ -14,8 +14,7 @@ clusterctl init --infrastructure docker
 
 kubectl config use-context kind-capi-management-cluster-kind
 
-echo "sleep 10 seconds..."
-sleep 10
+kubectl wait pods --all -A -l control-plane=controller-manager --for condition=Ready --timeout 60s
 
 kubectl apply -f clusters/cloudinit
 kubectl apply -f clusters/kubeadm-config-template
